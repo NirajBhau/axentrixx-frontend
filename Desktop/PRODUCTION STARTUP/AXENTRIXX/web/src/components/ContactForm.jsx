@@ -34,8 +34,11 @@ export default function ContactForm() {
     setIsSubmitting(true);
 
     try {
+      // Get API URL from environment variable
+      const apiUrl = import.meta.env.VITE_API_URL || 'https://axentrixx-backend-1.onrender.com';
+
       // Call backend API
-      const response = await fetch("http://localhost:5000/api/contact", {
+      const response = await fetch(`${apiUrl}/api/contact`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
