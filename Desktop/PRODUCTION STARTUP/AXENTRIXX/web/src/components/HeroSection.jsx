@@ -29,19 +29,20 @@ export default function HeroSection() {
 
       {/* Hero content */}
       <div className="relative z-10 w-full">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
+        <div className="max-w-7xl mx-auto" style={{ padding: '0 clamp(1rem, 4vw, 3rem)' }}>
           <div className="grid lg:grid-cols-2 min-h-[80vh]">
             {/* Left column - Text content */}
-            <div className="flex flex-col justify-center py-16 sm:py-20 lg:py-0 max-w-[650px]">
+            <div className="flex flex-col justify-center" style={{ padding: 'clamp(3rem, 8vw, 5rem) 0', maxWidth: '650px' }}>
               {/* Main headline */}
               <div className="mb-6">
                 <h1
                   className="font-bold text-[#1B1B1B] leading-tight tracking-tight"
                   style={{
                     fontFamily: '"Inter", sans-serif',
-                    fontSize: "clamp(32px, 5.5vw, 72px)",
-                    lineHeight: "clamp(38px, 6vw, 80px)",
+                    fontSize: "clamp(28px, 6vw, 72px)",
+                    lineHeight: "clamp(34px, 7vw, 80px)",
                     letterSpacing: "-0.02em",
+                    marginBottom: "clamp(1rem, 3vw, 1.5rem)",
                   }}
                 >
                   Transforming
@@ -59,11 +60,12 @@ export default function HeroSection() {
               {/* Sub-headline */}
               <div className="mb-8 max-w-[500px]">
                 <p
-                  className="leading-relaxed text-[#4B4B4B]"
+                  className="text-[#606060] leading-relaxed"
                   style={{
                     fontFamily: '"Inter", sans-serif',
-                    fontSize: "clamp(16px, 1.5vw, 20px)",
-                    lineHeight: 1.6,
+                    fontSize: "clamp(14px, 2.5vw, 18px)",
+                    lineHeight: "clamp(22px, 4vw, 30px)",
+                    marginBottom: "clamp(1.5rem, 4vw, 2.5rem)",
                   }}
                 >
                   From cutting-edge web applications to data-driven insights and
@@ -73,7 +75,7 @@ export default function HeroSection() {
               </div>
 
               {/* Key benefits */}
-              <div className="mb-10 space-y-3">
+              <div style={{ marginBottom: 'clamp(1.5rem, 4vw, 2.5rem)', display: 'flex', flexDirection: 'column', gap: 'clamp(0.5rem, 2vw, 0.75rem)' }}>
                 {[
                   "Custom Web Development & API Integration",
                   "Advanced Data Analytics & Business Intelligence",
@@ -81,22 +83,23 @@ export default function HeroSection() {
                 ].map((benefit, index) => (
                   <div
                     key={index}
-                    className="flex items-center space-x-3 animate-slideInRight"
+                    className="flex items-center animate-slideInRight"
                     style={{
+                      gap: 'clamp(0.5rem, 2vw, 0.75rem)',
                       animationDelay: `${index * 0.2}s`,
                       opacity: 0,
                       animationFillMode: 'forwards'
                     }}
                   >
                     <CheckCircle
-                      size={20}
                       className="text-[#2563EB] flex-shrink-0"
+                      style={{ width: 'clamp(18px, 4vw, 20px)', height: 'clamp(18px, 4vw, 20px)' }}
                     />
                     <span
                       className="text-[#2563EB] font-semibold"
                       style={{
                         fontFamily: '"Inter", sans-serif',
-                        fontSize: "16px",
+                        fontSize: "clamp(14px, 2.5vw, 16px)",
                       }}
                     >
                       {benefit}
@@ -105,14 +108,16 @@ export default function HeroSection() {
                 ))}
               </div>
 
-              {/* CTA buttons */}
-              <div className="flex flex-col sm:flex-row gap-4">
+              {/* CTA buttons - Fluid responsive */}
+              <div className="flex flex-col sm:flex-row" style={{ gap: 'clamp(0.75rem, 2vw, 1rem)', marginBottom: 'clamp(2rem, 5vw, 3rem)' }}>
                 <a
                   href="/request-quote"
-                  className="inline-flex items-center justify-center px-8 py-4 bg-[#2563EB] text-white rounded-lg font-semibold transition-all duration-200 ease-in-out hover:bg-[#1D4ED8] active:bg-[#1E40AF] active:scale-95 focus:outline-none focus:ring-2 focus:ring-[#2563EB] focus:ring-opacity-50 focus:ring-offset-2 focus:ring-offset-transparent group"
+                  className="inline-flex items-center justify-center bg-[#2563EB] text-white rounded-lg font-semibold transition-all duration-200 ease-in-out hover:bg-[#1D4ED8] active:bg-[#1E40AF] active:scale-95 focus:outline-none focus:ring-2 focus:ring-[#2563EB] focus:ring-opacity-50 focus:ring-offset-2 focus:ring-offset-transparent group"
                   style={{
                     fontFamily: '"Inter", sans-serif',
-                    fontSize: "16px",
+                    fontSize: "clamp(14px, 2vw, 16px)",
+                    padding: 'clamp(0.75rem, 2vw, 1rem) clamp(1.5rem, 4vw, 2rem)',
+                    minHeight: '48px',
                   }}
                 >
                   Request Quote
@@ -124,10 +129,12 @@ export default function HeroSection() {
 
                 <a
                   href="/products"
-                  className="inline-flex items-center justify-center px-8 py-4 border-2 border-[#2563EB] text-[#2563EB] rounded-lg font-semibold transition-all duration-200 ease-in-out hover:bg-[#2563EB] hover:text-white active:bg-[#1E40AF] active:scale-95 focus:outline-none focus:ring-2 focus:ring-[#2563EB] focus:ring-opacity-30 focus:ring-offset-2 focus:ring-offset-transparent"
+                  className="inline-flex items-center justify-center border-2 border-[#2563EB] text-[#2563EB] rounded-lg font-semibold transition-all duration-200 ease-in-out hover:bg-[#2563EB] hover:text-white active:bg-[#1E40AF] active:scale-95 focus:outline-none focus:ring-2 focus:ring-[#2563EB] focus:ring-opacity-30 focus:ring-offset-2 focus:ring-offset-transparent"
                   style={{
                     fontFamily: '"Inter", sans-serif',
-                    fontSize: "16px",
+                    fontSize: "clamp(14px, 2vw, 16px)",
+                    padding: 'clamp(0.75rem, 2vw, 1rem) clamp(1.5rem, 4vw, 2rem)',
+                    minHeight: '48px',
                   }}
                 >
                   View HMS Demo
