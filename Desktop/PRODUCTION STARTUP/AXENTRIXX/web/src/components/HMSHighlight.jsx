@@ -24,7 +24,8 @@ export default function HMSHighlight() {
     setMessage("");
 
     try {
-      const response = await fetch("http://localhost:5000/api/newsletter", {
+      const apiUrl = import.meta.env.VITE_API_URL || 'https://axentrixx-backend-1.onrender.com';
+      const response = await fetch(`${apiUrl}/api/newsletter`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
