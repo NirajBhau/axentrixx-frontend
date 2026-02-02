@@ -1,228 +1,142 @@
-import React, { useState } from "react";
-import { Send, CheckCircle, AlertCircle } from "lucide-react";
+import { useState } from 'react';
 
 export default function ContactForm() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    company: "",
-    phone: "",
-    service: "",
-    message: "",
-  });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState(null);
+    const [submitted, setSubmitted] = useState(false);
 
-  const serviceOptions = [
-    "Web Development",
-    "Data Analytics",
-    "Hospital Management System",
-    "Custom Solution",
-    "Consultation",
-    "Other",
-  ];
-
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-
-    try {
-      // Get API URL from environment variable
-      const apiUrl = import.meta.env.VITE_API_URL || 'https://axentrixx-backend-1.onrender.com';
-
-      // Call backend API
-      const response = await fetch(`${apiUrl}/api/contact`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-
-      const data = await response.json();
-
-      if (response.ok && data.success) {
-        setSubmitStatus("success");
-        setFormData({
-          name: "",
-          email: "",
-          company: "",
-          phone: "",
-          service: "",
-          message: "",
-        });
-      } else {
-        setSubmitStatus("error");
-      }
-    } catch (error) {
-      console.error("=== CONTACT FORM ERROR DETAILS ===");
-      console.error("Error name:", error.name);
-      console.error("Error message:", error.message);
-      console.error("Full error:", error);
-      console.error("API URL was:", import.meta.env.VITE_API_URL || 'https://axentrixx-backend-1.onrender.com');
-      console.error("==================================");
-      setSubmitStatus("error");
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  return (
-    <div className="w-full">
-      {/* Success Message */}
-      {submitStatus === "success" && (
-        <div className="mb-6 p-4 bg-green-50 border border-green-100 text-green-700 rounded-xl flex items-center space-x-2 animate-fade-in">
-          <CheckCircle size={20} />
-          <span className="text-sm font-medium">Message sent successfully!</span>
-        </div>
-      )}
-
-      {/* Error Message */}
-      {submitStatus === "error" && (
-        <div className="mb-6 p-4 bg-red-50 border border-red-100 text-red-700 rounded-xl flex items-center space-x-2 animate-fade-in">
-          <AlertCircle size={20} />
-          <span className="text-sm font-medium">Something went wrong. Please try again.</span>
-        </div>
-      )}
-
-      <form onSubmit={handleSubmit} className="space-y-5">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          {/* Name */}
-          <div className="group">
-            <label htmlFor="name" className="block text-sm font-bold text-blue-800 mb-1.5 pl-1 group-focus-within:text-blue-600 transition-colors">
-              Full Name <span className="text-red-400">*</span>
-            </label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              required
-              className="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 placeholder-slate-500 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all duration-300 hover:border-blue-300"
-              placeholder="John Doe"
-            />
-          </div>
-
-          {/* Email */}
-          <div className="group">
-            <label htmlFor="email" className="block text-sm font-bold text-blue-800 mb-1.5 pl-1 group-focus-within:text-blue-600 transition-colors">
-              Email Address <span className="text-red-400">*</span>
-            </label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-              className="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 placeholder-slate-500 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all duration-300 hover:border-blue-300"
-              placeholder="john@example.com"
-            />
-          </div>
-
-          {/* Company */}
-          <div className="group">
-            <label htmlFor="company" className="block text-sm font-bold text-blue-800 mb-1.5 pl-1 group-focus-within:text-blue-600 transition-colors">
-              Company Name
-            </label>
-            <input
-              type="text"
-              id="company"
-              name="company"
-              value={formData.company}
-              onChange={handleChange}
-              className="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 placeholder-slate-500 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all duration-300 hover:border-blue-300"
-              placeholder="Acme Inc."
-            />
-          </div>
-
-          {/* Phone */}
-          <div className="group">
-            <label htmlFor="phone" className="block text-sm font-bold text-blue-800 mb-1.5 pl-1 group-focus-within:text-blue-600 transition-colors">
-              Phone Number
-            </label>
-            <input
-              type="tel"
-              id="phone"
-              name="phone"
-              value={formData.phone}
-              onChange={handleChange}
-              className="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 placeholder-slate-500 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all duration-300 hover:border-blue-300"
-              placeholder="+1 (555) 000-0000"
-            />
-          </div>
-        </div>
-
-        {/* Service Interest */}
-        <div className="group">
-          <label htmlFor="service" className="block text-sm font-bold text-blue-800 mb-1.5 pl-1 group-focus-within:text-blue-600 transition-colors">
-            Service Interest <span className="text-red-400">*</span>
-          </label>
-          <div className="relative">
-            <select
-              id="service"
-              name="service"
-              value={formData.service}
-              onChange={handleChange}
-              required
-              className="w-full px-5 py-3.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-700 appearance-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all duration-300 hover:border-blue-300 cursor-pointer"
-            >
-              <option value="" disabled>Select a service</option>
-              {serviceOptions.map((service) => (
-                <option key={service} value={service}>
-                  {service}
-                </option>
-              ))}
-            </select>
-            <div className="absolute inset-y-0 right-0 flex items-center px-5 pointer-events-none text-slate-500">
-              <svg className="w-4 h-4 fill-current" viewBox="0 0 20 20">
-                <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" fillRule="evenodd"></path>
-              </svg>
+    if (submitted) {
+        return (
+            <div className="max-w-2xl mx-auto bg-green-50 border-2 border-green-200 rounded-2xl p-8 text-center">
+                <div className="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                </div>
+                <h3 className="text-2xl font-bold text-gray-900 mb-2">Message Sent Successfully!</h3>
+                <p className="text-gray-600 mb-6">Thank you for contacting us. We'll get back to you within 24 hours.</p>
+                <button
+                    onClick={() => setSubmitted(false)}
+                    className="text-blue-600 hover:text-blue-700 font-semibold"
+                >
+                    Send Another Message
+                </button>
             </div>
-          </div>
-        </div>
+        );
+    }
 
-        {/* Message */}
-        <div className="group">
-          <label htmlFor="message" className="block text-sm font-bold text-blue-800 mb-1.5 pl-1 group-focus-within:text-blue-600 transition-colors">
-            Your Message <span className="text-red-400">*</span>
-          </label>
-          <textarea
-            id="message"
-            name="message"
-            value={formData.message}
-            onChange={handleChange}
-            required
-            rows={4}
-            className="w-full px-5 py-3.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-700 placeholder-slate-400 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all duration-300 hover:border-blue-300 resize-none"
-            placeholder="Tell us about your project..."
-          />
-        </div>
-
-        {/* Submit Button */}
-        <button
-          type="submit"
-          disabled={isSubmitting}
-          className="w-full md:w-auto px-10 py-4 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold rounded-xl transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed shadow-lg shadow-blue-500/25 flex items-center justify-center space-x-2"
+    return (
+        <form
+            name="contact"
+            method="POST"
+            data-netlify="true"
+            data-netlify-honeypot="bot-field"
+            onSubmit={() => setTimeout(() => setSubmitted(true), 100)}
+            className="max-w-2xl mx-auto bg-white rounded-2xl shadow-xl p-8"
         >
-          {isSubmitting ? (
-            <span>Sending...</span>
-          ) : (
-            <>
-              <span>Send Message</span>
-              <Send size={18} className="ml-2" />
-            </>
-          )}
-        </button>
-      </form>
-    </div>
-  );
+            {/* Hidden fields for Netlify */}
+            <input type="hidden" name="form-name" value="contact" />
+            <p hidden>
+                <label>Don't fill this out: <input name="bot-field" /></label>
+            </p>
+
+            <h2 className="text-3xl font-bold text-gray-900 mb-6">Get In Touch</h2>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                        Full Name <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                        type="text"
+                        name="name"
+                        required
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        placeholder="John Doe"
+                    />
+                </div>
+
+                <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                        Email <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                        type="email"
+                        name="email"
+                        required
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        placeholder="john@example.com"
+                    />
+                </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                        Phone Number
+                    </label>
+                    <input
+                        type="tel"
+                        name="phone"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        placeholder="+91 1234567890"
+                    />
+                </div>
+
+                <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                        Company Name
+                    </label>
+                    <input
+                        type="text"
+                        name="company"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        placeholder="Your Company"
+                    />
+                </div>
+            </div>
+
+            <div className="mb-6">
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    Service Interested In <span className="text-red-500">*</span>
+                </label>
+                <select
+                    name="service"
+                    required
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                >
+                    <option value="">Select a service</option>
+                    <option value="Web Development">Custom Web Development</option>
+                    <option value="Mobile App Development">Mobile App Development</option>
+                    <option value="Healthcare Management">Healthcare Management Systems</option>
+                    <option value="Business Intelligence">Business Intelligence</option>
+                    <option value="Data Analytics">Data Analytics</option>
+                    <option value="Cloud Solutions">Cloud Solutions</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+
+            <div className="mb-6">
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    Message <span className="text-red-500">*</span>
+                </label>
+                <textarea
+                    name="message"
+                    required
+                    rows="5"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+                    placeholder="Tell us about your project..."
+                ></textarea>
+            </div>
+
+            <button
+                type="submit"
+                className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold py-4 px-8 rounded-lg transition-all transform hover:scale-105 shadow-lg"
+            >
+                Send Message
+            </button>
+
+            <p className="text-xs text-gray-500 mt-4 text-center">
+                By submitting this form, you agree to our Privacy Policy and Terms of Service.
+            </p>
+        </form>
+    );
 }
