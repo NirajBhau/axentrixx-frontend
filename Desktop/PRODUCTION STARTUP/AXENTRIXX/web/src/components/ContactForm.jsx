@@ -62,7 +62,12 @@ export default function ContactForm() {
         setSubmitStatus("error");
       }
     } catch (error) {
-      console.error("Contact form submission error:", error);
+      console.error("=== CONTACT FORM ERROR DETAILS ===");
+      console.error("Error name:", error.name);
+      console.error("Error message:", error.message);
+      console.error("Full error:", error);
+      console.error("API URL was:", import.meta.env.VITE_API_URL || 'https://axentrixx-backend-1.onrender.com');
+      console.error("==================================");
       setSubmitStatus("error");
     } finally {
       setIsSubmitting(false);
