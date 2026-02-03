@@ -29,8 +29,12 @@ export default function ContactForm() {
             method="POST"
             data-netlify="true"
             data-netlify-honeypot="bot-field"
-            onSubmit={() => setTimeout(() => setSubmitted(true), 100)}
             className="max-w-2xl mx-auto bg-white rounded-2xl shadow-xl p-8"
+            onSubmit={(e) => {
+                // Let Netlify handle the submission
+                // Show success message after a brief delay
+                setTimeout(() => setSubmitted(true), 500);
+            }}
         >
             {/* Hidden fields for Netlify */}
             <input type="hidden" name="form-name" value="contact" />
